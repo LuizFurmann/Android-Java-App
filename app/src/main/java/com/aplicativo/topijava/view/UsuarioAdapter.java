@@ -1,5 +1,9 @@
-package com.aplicativo.topijava.adapter;
+package com.aplicativo.topijava.view;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +25,8 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UserView
     private List<Data> listItems;
     private List<Data> filteredListItems;
 
+    Context context;
+
     public void setListItems(List<Data> listItems){
         this.listItems = listItems;
         filteredListItems = new ArrayList<>(listItems);
@@ -35,15 +41,27 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UserView
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        holder.name.setText(listItems.get(position).getName());
-        holder.description.setText(listItems.get(position).getDescription());
-        holder.forks.setText(listItems.get(position).getForsk());
-        holder.stargazers_count.setText(listItems.get(position).getStargazers_count());
-        holder.full_name.setText(listItems.get(position).getFull_name());
-        holder.login.setText(listItems.get(position).getLogin());
+         Data currentPosition = listItems.get(position);
+
+        holder.name.setText(currentPosition.getName());
+        holder.description.setText(currentPosition.getDescription());
+        holder.forks.setText(currentPosition.getForsk());
+        holder.stargazers_count.setText(currentPosition.getStargazers_count());
+        holder.full_name.setText(currentPosition.getFull_name());
+        holder.login.setText(currentPosition.getLogin());
         Glide.with(holder.avatar_image)
-                .load(listItems.get(position).getOwner().getAvatar_url())
+                .load(currentPosition.getOwner().getAvatar_url())
                 .into(holder.avatar_image);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(context, RepoDetailsActivity.class);
+                myIntent.putExtra("repo", currentPosition);
+                myIntent.putExtra("imgProfile", currentPosition.getOwner());
+                context.startActivity(myIntent);
+            }
+        });
     }
 
     @Override

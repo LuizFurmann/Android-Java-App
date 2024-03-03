@@ -1,6 +1,10 @@
 package com.aplicativo.topijava.model;
 
-public class Data{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+
+public class Data implements Parcelable {
 
     private String name;
     private String description;
@@ -19,6 +23,27 @@ public class Data{
         this.full_name = full_name;
         this.login = login;
     }
+
+    protected Data(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        forks = in.readString();
+        stargazers_count = in.readString();
+        full_name = in.readString();
+        login = in.readString();
+    }
+
+    public static final Creator<Data> CREATOR = new Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -45,5 +70,20 @@ public class Data{
     }
     public void setOwner(Owner owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(forks);
+        parcel.writeString(stargazers_count);
+        parcel.writeString(full_name);
+        parcel.writeString(login);
     }
 }

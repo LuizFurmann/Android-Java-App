@@ -1,4 +1,4 @@
- package com.aplicativo.topijava;
+ package com.aplicativo.topijava.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -9,27 +9,33 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.aplicativo.topijava.adapter.UsuarioAdapter;
+
+import com.aplicativo.topijava.R;
+import com.aplicativo.topijava.databinding.ActivityMainBinding;
 import com.aplicativo.topijava.viewmodel.MainViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
  @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
      private UsuarioAdapter usuarioAdapter;
+     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(binding.getRoot());
 
         initRecyclerView();
         initViewModel();
     }
 
     private void initRecyclerView(){
+
         RecyclerView recyclerView = findViewById(R.id.rvUsuarios);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         usuarioAdapter = new UsuarioAdapter();
+        usuarioAdapter.context = this;
         recyclerView.setAdapter(usuarioAdapter);
     }
 
