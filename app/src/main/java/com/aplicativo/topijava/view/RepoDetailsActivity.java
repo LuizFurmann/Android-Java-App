@@ -22,6 +22,8 @@ public class RepoDetailsActivity extends AppCompatActivity {
         binding = ActivityRepoDetailsBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
+
+
         setupToolbar();
 
         updateView();
@@ -50,11 +52,19 @@ public class RepoDetailsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.home) {
-                finish();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                onBackPressed();
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     private void setupToolbar() {
