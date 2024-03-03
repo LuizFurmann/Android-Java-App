@@ -1,8 +1,13 @@
 package com.aplicativo.topijava.view;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+
+import com.aplicativo.topijava.R;
 import com.aplicativo.topijava.databinding.ActivityRepoDetailsBinding;
 import com.aplicativo.topijava.model.Data;
 import com.aplicativo.topijava.model.Owner;
@@ -17,6 +22,7 @@ public class RepoDetailsActivity extends AppCompatActivity {
         binding = ActivityRepoDetailsBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
+        setupToolbar();
 
         updateView();
     }
@@ -40,6 +46,23 @@ public class RepoDetailsActivity extends AppCompatActivity {
                         .load(profile.getAvatar_url())
                         .into(binding.imgProfile);
             }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.home) {
+                finish();
+                return true;
+        }
+    }
+
+    private void setupToolbar() {
+        setTitle("");
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 }

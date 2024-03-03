@@ -25,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
+        setTitle("");
 
         initRecyclerView();
         initViewModel();
     }
 
     private void initRecyclerView(){
-
         RecyclerView recyclerView = findViewById(R.id.rvUsuarios);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         usuarioAdapter = new UsuarioAdapter();
