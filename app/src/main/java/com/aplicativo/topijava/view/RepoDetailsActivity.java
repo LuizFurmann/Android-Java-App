@@ -27,7 +27,6 @@ public class RepoDetailsActivity extends AppCompatActivity {
             Data repo = (Data) getIntent().getParcelableExtra("repo");
             Data data = repo;
 
-            binding.tvUsername.setText(data.getLogin());
             binding.tvFullname.setText(data.getFull_name());
             binding.tvRepoName.setText(data.getName());
             binding.tvRepoDescription.setText(data.getDescription());

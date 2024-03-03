@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.aplicativo.topijava.R;
+import com.aplicativo.topijava.databinding.ItemLayoutBinding;
 import com.aplicativo.topijava.model.Data;
 import com.bumptech.glide.Glide;
 import java.util.ArrayList;
@@ -35,8 +36,8 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UserView
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
-        return new UserViewHolder(view);
+        ItemLayoutBinding itemBinding = ItemLayoutBinding .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new UserViewHolder(itemBinding);
     }
 
     @Override
@@ -48,7 +49,6 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UserView
         holder.forks.setText(currentPosition.getForsk());
         holder.stargazers_count.setText(currentPosition.getStargazers_count());
         holder.full_name.setText(currentPosition.getFull_name());
-        holder.login.setText(currentPosition.getLogin());
         Glide.with(holder.avatar_image)
                 .load(currentPosition.getOwner().getAvatar_url())
                 .into(holder.avatar_image);
@@ -113,15 +113,15 @@ public class UsuarioAdapter extends RecyclerView.Adapter<UsuarioAdapter.UserView
         TextView full_name;
         TextView login;
 
-        public UserViewHolder(@NonNull View itemView) {
-            super(itemView);
-            avatar_image = itemView.findViewById(R.id.avatar_image);
-            name = itemView.findViewById(R.id.name);
-            description = itemView.findViewById(R.id.description);
-            forks = itemView.findViewById(R.id.forks);
-            stargazers_count = itemView.findViewById(R.id.star);
-            full_name = itemView.findViewById(R.id.full_name);
-            login = itemView.findViewById(R.id.login);
+        public UserViewHolder(@NonNull ItemLayoutBinding binding) {
+            super(binding.getRoot());
+
+            avatar_image = binding.avatarImage;
+            name = binding.name; itemView.findViewById(R.id.name);
+            description = binding.description; itemView.findViewById(R.id.description);
+            forks = binding.forks; itemView.findViewById(R.id.forks);
+            stargazers_count = binding.star; itemView.findViewById(R.id.star);
+            full_name = binding.fullName; itemView.findViewById(R.id.fullName);
         }
     }
 }
