@@ -3,6 +3,7 @@
     package="com.aplicativo.topijava">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Application"
         android:allowBackup="true"
@@ -11,9 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TOPiJava">
+
         <activity
             android:name=".view.RepoDetailsActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".view.MainActivity"
             android:exported="true">

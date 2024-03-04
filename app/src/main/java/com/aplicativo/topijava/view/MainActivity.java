@@ -5,11 +5,15 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.aplicativo.topijava.PowerReceiver;
 import com.aplicativo.topijava.R;
 import com.aplicativo.topijava.databinding.ActivityMainBinding;
 import com.aplicativo.topijava.viewmodel.MainViewModel;
@@ -20,18 +24,32 @@ public class MainActivity extends AppCompatActivity {
      private UsuarioAdapter usuarioAdapter;
      private ActivityMainBinding binding;
 
+     private PowerReceiver powerReceiver = new PowerReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
-        setTitle("");
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
+
+        registerReceiver(powerReceiver, intentFilter);
+
+        setTitle("");
         initRecyclerView();
         initViewModel();
     }
 
-    private void initRecyclerView(){
+     @Override
+     protected void onDestroy() {
+         super.onDestroy();
+         unregisterReceiver(powerReceiver);
+     }
+
+     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.rvUsuarios);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         usuarioAdapter = new UsuarioAdapter();
